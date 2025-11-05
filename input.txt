@@ -6,7 +6,7 @@ begin
     read(a);
     read(b);
     write(a+b);
-    if(a == b) then
+    if(a == b AND a < 10) then
     write(b);
     endif;
 

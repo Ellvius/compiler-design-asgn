@@ -13,7 +13,8 @@ typedef enum {
     TYPE_BOOL,
 } VarType;
 
-typedef enum {
+typedef enum
+{
     NODE_CONN,
     NODE_LEAF,
     NODE_READ,
@@ -35,9 +36,10 @@ typedef enum {
     NODE_DOWHILE,
     NODE_REPEAT,
     NODE_ARRAY,
+    NODE_AND,
+    NODE_OR,
+    NODE_NOT
 } NodeType;
-
-
 
 typedef struct ASTNode{
     int value;                         // union of intval, strval, or varname
@@ -82,5 +84,8 @@ ASTNode* makeIfElseNode(ASTNode* l, ASTNode* m, ASTNode* r);
 
 /* Make Int array node*/
 ASTNode* makeArrayNode(char* arrName, VarType type, ASTNode* l);
+
+/* Make Logical Operation node*/
+ASTNode *makeLogicOPNode(NodeType ntype, ASTNode *l, ASTNode *r);
 
 #endif

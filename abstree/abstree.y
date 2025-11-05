@@ -31,6 +31,10 @@
 %type <node> InputStmt OutputStmt AsgStmt IfStmt IterativeStmt
 %type <node>  Identifier
 
+%left OR
+%left AND
+%right NOT
+
 %right ASSGN
 %nonassoc NE EQ
 %nonassoc LT LE GT GE
@@ -42,7 +46,7 @@
 Program     :   Declarations Code                   {
                                                         $$ = $2;
                                                         printSymbolTable();
-                                                        // codeGen($2);
+                                                        codeGen($2);
                                                         exit(0);
                                                     }
 
@@ -112,6 +116,9 @@ Expr        :   Expr PLUS Expr          {$$ = makeArithOPNode(NODE_ADD, $1, $3);
             |   Expr MUL Expr           {$$ = makeArithOPNode(NODE_MUL, $1, $3);}
             |   Expr DIV Expr           {$$ = makeArithOPNode(NODE_DIV, $1, $3);}
             |   Expr MOD Expr           {$$ = makeArithOPNode(NODE_MOD, $1, $3);}
+            |   Expr AND Expr           {$$ = makeLogicOPNode(NODE_AND, $1, $3);}
+            |   Expr OR Expr            {$$ = makeLogicOPNode(NODE_OR, $1, $3);}
+            |   NOT Expr                {$$ = makeLogicOPNode(NODE_NOT, $2, NULL);}
             |   '(' Expr ')'            {$$ = $2;}
             |   Expr LT Expr            {$$ = makeRelOPNode(NODE_LT, $1, $3);}
             |   Expr GT Expr            {$$ = makeRelOPNode(NODE_GT, $1, $3);}
