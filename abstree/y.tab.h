@@ -69,28 +69,23 @@ extern int yydebug;
     ENDWHILE = 270,                /* ENDWHILE  */
     REPEAT = 271,                  /* REPEAT  */
     UNTIL = 272,                   /* UNTIL  */
-    BREAK = 273,                   /* BREAK  */
-    CONTINUE = 274,                /* CONTINUE  */
-    PLUS = 275,                    /* PLUS  */
-    MINUS = 276,                   /* MINUS  */
-    STAR = 277,                    /* STAR  */
-    DIV = 278,                     /* DIV  */
-    MOD = 279,                     /* MOD  */
-    LT = 280,                      /* LT  */
-    GT = 281,                      /* GT  */
-    LE = 282,                      /* LE  */
-    GE = 283,                      /* GE  */
-    NE = 284,                      /* NE  */
-    EQ = 285,                      /* EQ  */
-    ASSGN = 286,                   /* ASSGN  */
-    EOS = 287,                     /* EOS  */
-    COMMA = 288,                   /* COMMA  */
-    ADDR = 289,                    /* ADDR  */
-    INT = 290,                     /* INT  */
-    STR = 291,                     /* STR  */
-    NUM = 292,                     /* NUM  */
-    STRING = 293,                  /* STRING  */
-    ID = 294                       /* ID  */
+    PLUS = 273,                    /* PLUS  */
+    MINUS = 274,                   /* MINUS  */
+    MUL = 275,                     /* MUL  */
+    DIV = 276,                     /* DIV  */
+    MOD = 277,                     /* MOD  */
+    LT = 278,                      /* LT  */
+    GT = 279,                      /* GT  */
+    LE = 280,                      /* LE  */
+    GE = 281,                      /* GE  */
+    NE = 282,                      /* NE  */
+    EQ = 283,                      /* EQ  */
+    ASSGN = 284,                   /* ASSGN  */
+    EOS = 285,                     /* EOS  */
+    COMMA = 286,                   /* COMMA  */
+    INT = 287,                     /* INT  */
+    NUM = 288,                     /* NUM  */
+    ID = 289                       /* ID  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -114,43 +109,35 @@ extern int yydebug;
 #define ENDWHILE 270
 #define REPEAT 271
 #define UNTIL 272
-#define BREAK 273
-#define CONTINUE 274
-#define PLUS 275
-#define MINUS 276
-#define STAR 277
-#define DIV 278
-#define MOD 279
-#define LT 280
-#define GT 281
-#define LE 282
-#define GE 283
-#define NE 284
-#define EQ 285
-#define ASSGN 286
-#define EOS 287
-#define COMMA 288
-#define ADDR 289
-#define INT 290
-#define STR 291
-#define NUM 292
-#define STRING 293
-#define ID 294
+#define PLUS 273
+#define MINUS 274
+#define MUL 275
+#define DIV 276
+#define MOD 277
+#define LT 278
+#define GT 279
+#define LE 280
+#define GE 281
+#define NE 282
+#define EQ 283
+#define ASSGN 284
+#define EOS 285
+#define COMMA 286
+#define INT 287
+#define NUM 288
+#define ID 289
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 16 "abstree.y"
+#line 15 "abstree.y"
 
     struct ASTNode *node;
-    struct Gsymbol *stEntry;
-    int idType;
     char* idName;
     int intVal;
-    char* strVal;
 
-#line 154 "y.tab.h"
+#line 141 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

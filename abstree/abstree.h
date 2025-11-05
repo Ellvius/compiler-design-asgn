@@ -11,9 +11,6 @@ typedef enum {
     TYPE_INT,
     TYPE_CHAR,
     TYPE_BOOL,
-    TYPE_STR,
-    TYPE_INT_PTR,
-    TYPE_STR_PTR
 } VarType;
 
 typedef enum {
@@ -37,22 +34,13 @@ typedef enum {
     NODE_WHILE,
     NODE_DOWHILE,
     NODE_REPEAT,
-    NODE_BREAK,
-    NODE_CONTINUE,
     NODE_ARRAY,
-    NODE_ADDR,
-    NODE_PTR
 } NodeType;
 
 
 
-typedef union Constant {
-    int intVal;                             // value of the constant
-    char* strVal;
-} Constant;
-
 typedef struct ASTNode{
-    Constant *value;                         // union of intval, strval, or varname
+    int value;                         // union of intval, strval, or varname
     VarType type;                           // type of the variable
     char* varName;                          // name of the variable
     NodeType nodetype;                      // node type information
@@ -63,10 +51,10 @@ typedef struct ASTNode{
 
 
 /* Create a generic AST node */
-ASTNode* TreeCreate(union Constant *val, VarType vtype, char* vname, NodeType ntype, ASTNode *l, ASTNode *m, ASTNode *r);
+ASTNode* TreeCreate(int val, VarType vtype, char* vname, NodeType ntype, ASTNode *l, ASTNode *m, ASTNode *r);
 
 /* Make Leaf node (NUM constant or ID variable) */
-ASTNode* makeLeafNode(int n, char* s, VarType vtype, char* vname);
+ASTNode* makeLeafNode(int n, VarType vtype, char* vname);
 
 /* Make arithmetic operator node (+, -, *, /) */
 ASTNode* makeArithOPNode(NodeType ntype, ASTNode* l, ASTNode* r);
@@ -92,17 +80,7 @@ ASTNode* makeIterationNode(NodeType ntype, ASTNode *l, ASTNode* r);
 /* Make IF-ELSE conditional node */
 ASTNode* makeIfElseNode(ASTNode* l, ASTNode* m, ASTNode* r);
 
-/* Make BREAK statement node */
-ASTNode* makeBreakNode(void);
-
-/* Make CONTINUE statement node */
-ASTNode* makeContinueNode(void);
-
-/* Make Int/String array node*/
-ASTNode* makeArrayNode(char* arrName, VarType type, ASTNode* l, ASTNode* r);
-
-ASTNode* makeAddrNode(ASTNode* node);
-
-ASTNode* makePtrNode(ASTNode* node);
+/* Make Int array node*/
+ASTNode* makeArrayNode(char* arrName, VarType type, ASTNode* l);
 
 #endif

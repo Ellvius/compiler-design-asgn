@@ -1,9 +1,23 @@
 decl
-    int a, b;
+    int a, b, c[10];int hello[100];
 enddecl
 
 begin
     read(a);
     read(b);
     write(a+b);
+    if(a == b) then
+    write(b);
+    endif;
+
+    if(a < 0) then
+        write(4);
+    else
+        write(5);
+    endif;
+
+    while(a > 10) do
+        write(b);
+        a = a - 1;
+    endwhile;
 end;

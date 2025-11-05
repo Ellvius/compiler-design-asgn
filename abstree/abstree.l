@@ -11,7 +11,6 @@
 digit           [0-9]
 letter          [a-zA-Z]
 identifier      {letter}({letter}|{digit})*
-string          \"(\\.|[^\\\"])*\"
 
 %%
 
@@ -33,11 +32,8 @@ string          \"(\\.|[^\\\"])*\"
 "endwhile"  { return ENDWHILE; }
 "repeat"    { return REPEAT; }
 "until"     { return UNTIL; }
-"break"     { return BREAK; }
-"continue"  { return CONTINUE; }
 
 "int"       { return INT; }
-"str"       { return STR; }
 
 "<="        { return LE; }
 ">="        { return GE; }
@@ -46,34 +42,18 @@ string          \"(\\.|[^\\\"])*\"
 "<"         { return LT; }
 ">"         { return GT; }
 
-{digit}+            { 
-                        yylval.intVal = atoi(yytext); 
-                        return NUM;
-                    }
+{digit}+            {yylval.intVal = atoi(yytext); return NUM;}
 
-{identifier}        { 
-                        yylval.idName = strdup(yytext); 
-                        return ID;
-                    }
-
-{string}            {
-                        size_t  len = strlen(yytext);
-                        if(len < 2) {
-                            yyerror("empty string literal");
-                        }
-                        yylval.strVal = strndup(yytext+1, len-2);
-                        return STRING;
-                    }
+{identifier}        {yylval.idName = strdup(yytext); return ID;}
 
 "+"         { return PLUS; }
 "-"         { return MINUS; }
-"*"         { return STAR; }
+"*"         { return MUL; }
 "/"         { return DIV; }
 "%"         { return MOD; }
 "="         { return ASSGN; }
 ";"         { return EOS; }
 ","         { return COMMA; }
-"&"         { return ADDR; }
 
 [ \t\n]     { }
 [()\[\]]        { return *yytext; }

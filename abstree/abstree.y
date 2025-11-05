@@ -6,7 +6,6 @@
     #include "../symboltable/symboltable.h"
 
     extern FILE *yyin;
-    VarType currentType = TYPE_NONE;
 
     int yylex(void);
     int yyerror(const char *s);
@@ -15,42 +14,35 @@
 
 %union{
     struct ASTNode *node;
-    struct Gsymbol *stEntry;
-    int idType;
     char* idName;
     int intVal;
-    char* strVal;
 }
 
 %token START_BLOCK END_BLOCK DECL ENDDECL READ WRITE 
 %token IF THEN ELSE ENDIF
 %token WHILE DO ENDWHILE REPEAT UNTIL
-%token BREAK CONTINUE
-%token PLUS MINUS STAR DIV MOD
+%token PLUS MINUS MUL DIV MOD
 %token LT GT LE GE NE EQ
-%token ASSGN EOS COMMA ADDR
-%token INT STR
+%token ASSGN EOS COMMA 
+%token INT 
 %token <intVal> NUM
-%token <strVal> STRING
 %token <idName> ID
 %type <node> Expr Program Slist Stmt Code
-%type <stEntry> VarList
-%type <idType> Type
 %type <node> InputStmt OutputStmt AsgStmt IfStmt IterativeStmt
-%type <node> BreakStmt ContinueStmt Identifier
+%type <node>  Identifier
 
 %right ASSGN
 %nonassoc NE EQ
 %nonassoc LT LE GT GE
 %left PLUS MINUS
-%left STAR DIV MOD
+%left MUL DIV MOD
 
 %%
 
 Program     :   Declarations Code                   {
                                                         $$ = $2;
-                                                        // printSymbolTable();
-                                                        codeGen($2);
+                                                        printSymbolTable();
+                                                        // codeGen($2);
                                                         exit(0);
                                                     }
 
@@ -73,8 +65,6 @@ Stmt        :   IfStmt                  {$$ = $1;}
             |   InputStmt               {$$ = $1;}
             |   OutputStmt              {$$ = $1;}
             |   AsgStmt                 {$$ = $1;}
-            |   BreakStmt               {$$ = $1;}
-            |   ContinueStmt            {$$ = $1;}
             ;
 
 Declarations:   DECL DeclList ENDDECL   {}
@@ -85,29 +75,13 @@ DeclList    :   DeclList Decl           {}
             |   Decl                    {}
             ;
 
-Decl        :   Type VarList EOS        {}
+Decl        :   INT VarList EOS        {}
             ;
 
-Type        :   INT                     {currentType = TYPE_INT; $$ = TYPE_INT;}
-            |   STR                     {currentType = TYPE_STR; $$ = TYPE_STR;}
-            ;
-
-VarList     :   VarList COMMA ID '['NUM']' '['NUM']'    {GInstall($3, currentType, $5*$8, $5, $8);} 
-            |   VarList COMMA ID '['NUM']'              {GInstall($3, currentType, $5, $5, 0);} 
-            |   VarList COMMA ID                        {GInstall($3, currentType, 1, 0, 0);}
-            |   VarList COMMA STAR ID                   {
-                                                            VarType ptrType = currentType == TYPE_INT ?
-                                                            TYPE_INT_PTR : TYPE_STR_PTR; 
-                                                            GInstall($4, ptrType, 1, 0, 0);
-                                                        }
-            |   ID '['NUM']' '['NUM']'                  {GInstall($1, currentType, $3*$6, $3, $6);} 
-            |   ID '['NUM']'                            {GInstall($1, currentType, $3, $3, 0);}
-            |   ID                                      {GInstall($1, currentType, 1, 0, 0);}
-            |   STAR ID                                 {
-                                                            VarType ptrType = currentType == TYPE_INT ?
-                                                            TYPE_INT_PTR : TYPE_STR_PTR; 
-                                                            GInstall($2, ptrType, 1, 0, 0);
-                                                        }
+VarList     :   VarList COMMA ID '['NUM']'              {GInstall($3, TYPE_INT, $5);} 
+            |   VarList COMMA ID                        {GInstall($3, TYPE_INT, 1);}
+            |   ID '['NUM']'                            {GInstall($1, TYPE_INT, $3);}
+            |   ID                                      {GInstall($1, TYPE_INT, 1);}
             ;
 
 IfStmt      :   IF '(' Expr ')' THEN Slist ELSE Slist ENDIF EOS     {$$ = makeIfElseNode($3, $6, $8);}
@@ -122,28 +96,20 @@ IterativeStmt   :   WHILE '(' Expr ')' DO Slist ENDWHILE EOS        {$$ = makeIt
 InputStmt   :   READ '(' Identifier ')' EOS         {$$ = makeReadNode($3);}
             ;
 
-OutputStmt  :   WRITE '(' Expr ')' EOS  {$$ = makeWriteNode($3);}
+OutputStmt  :   WRITE '(' Expr ')' EOS              {$$ = makeWriteNode($3);}
             ;
 
-AsgStmt     :   Identifier ASSGN Expr EOS               {$$ = makeAssgnNode($1, $3);}
-            |   Identifier ASSGN ADDR Identifier EOS    {$$ = makeAssgnNode($1, makeAddrNode($4));}
+AsgStmt     :   Identifier ASSGN Expr EOS           {$$ = makeAssgnNode($1, $3);}
             ;
 
-BreakStmt   :   BREAK EOS               {$$ = makeBreakNode();}
-            ;
 
-ContinueStmt:   CONTINUE EOS            {$$ = makeContinueNode();}
-            ;
-
-Identifier  :   ID '['Expr']' '['Expr']'    {$$ = makeArrayNode($1, TYPE_ID, $3, $6);}
-            |   ID '['Expr']'               {$$ = makeArrayNode($1, TYPE_ID, $3, NULL);}
-            |   ID                          {$$ = makeLeafNode(0, NULL, TYPE_ID, $1);}
-            |   STAR ID                     {$$ = makePtrNode(makeLeafNode(0, NULL, TYPE_ID, $2));}
+Identifier  :   ID '['Expr']'               {$$ = makeArrayNode($1, TYPE_ID, $3);}
+            |   ID                          {$$ = makeLeafNode(0, TYPE_ID, $1);}
             ;
 
 Expr        :   Expr PLUS Expr          {$$ = makeArithOPNode(NODE_ADD, $1, $3);}
             |   Expr MINUS Expr         {$$ = makeArithOPNode(NODE_SUB, $1, $3);}
-            |   Expr STAR Expr          {$$ = makeArithOPNode(NODE_MUL, $1, $3);}
+            |   Expr MUL Expr           {$$ = makeArithOPNode(NODE_MUL, $1, $3);}
             |   Expr DIV Expr           {$$ = makeArithOPNode(NODE_DIV, $1, $3);}
             |   Expr MOD Expr           {$$ = makeArithOPNode(NODE_MOD, $1, $3);}
             |   '(' Expr ')'            {$$ = $2;}
@@ -154,8 +120,7 @@ Expr        :   Expr PLUS Expr          {$$ = makeArithOPNode(NODE_ADD, $1, $3);
             |   Expr NE Expr            {$$ = makeRelOPNode(NODE_NE, $1, $3);}
             |   Expr EQ Expr            {$$ = makeRelOPNode(NODE_EQ, $1, $3);}
             |   Identifier              {$$ = $1;}
-            |   NUM                     {$$ = makeLeafNode($1, NULL, TYPE_INT, NULL);}
-            |   STRING                  {$$ = makeLeafNode(0, $1, TYPE_STR, NULL);}
+            |   NUM                     {$$ = makeLeafNode($1, TYPE_INT, NULL);}
             ;
 
 %%
