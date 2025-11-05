@@ -1355,7 +1355,7 @@ yyreduce:
                                                     {
                                                         (yyval.node) = (yyvsp[0].node);
                                                         printSymbolTable();
-                                                        // codeGen($2);
+                                                        codeGen((yyvsp[0].node));
                                                         exit(0);
                                                     }
 #line 1362 "y.tab.c"
