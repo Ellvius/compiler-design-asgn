@@ -196,6 +196,66 @@ char* codeGenNODE(ASTNode* node, FILE* fp){
             return NULL;
         }
 
+        case NODE_AND: {
+            int t = getTemp();
+            int L1 = getLabel();
+            int L2 = getLabel();
+            int L3 = getLabel();
+
+            char *left = codeGenNODE(node->left, fp);
+            fprintf(fp, "\tifFalse (%s) goto L%d\n", left, L1);
+            
+            char *right = codeGenNODE(node->right, fp);
+            fprintf(fp, "\tifFalse (%s) goto L%d\n", right, L1);
+            fprintf(fp, "\tt%d = 1\n", t);
+            fprintf(fp, "\tgoto L%d\n", L2);
+            fprintf(fp, "L%d:\n", L1);
+            fprintf(fp, "\tt%d = 0\n", t);
+            fprintf(fp, "L%d:\n", L2);
+
+            fprintf(fp, "\n");
+            return numToString(t, 1);
+        }
+
+        case NODE_OR: {
+            int t = getTemp();
+            int L1 = getLabel();
+            int L2 = getLabel();
+            int L3 = getLabel();
+
+            char *left = codeGenNODE(node->left, fp);
+            fprintf(fp, "\tif (%s) goto L%d\n", left, L1);
+            
+            char *right = codeGenNODE(node->right, fp);
+            fprintf(fp, "\tif (%s) goto L%d\n", right, L1);
+            fprintf(fp, "\tt%d = 0\n", t);
+            fprintf(fp, "\tgoto L%d\n", L2);
+            fprintf(fp, "L%d:\n", L1);
+            fprintf(fp, "\tt%d = 1\n", t);
+            fprintf(fp, "L%d:\n", L2);
+
+            fprintf(fp, "\n");
+            return numToString(t, 1);
+        }
+
+        case NODE_NOT: {
+            int t = getTemp();
+            int L1 = getLabel();
+            int L2 = getLabel();
+
+            char *operand = codeGenNODE(node->left, fp);
+
+            fprintf(fp, "\tif (%s) goto L%d\n", operand, L1);
+            fprintf(fp, "\tt%d = 1\n", t); // true if operand is false
+            fprintf(fp, "\tgoto L%d\n", L2);
+            fprintf(fp, "L%d:\n", L1);
+            fprintf(fp, "\tt%d = 0\n", t); // false if operand is true
+            fprintf(fp, "L%d:\n", L2);
+
+            fprintf(fp, "\n");
+            return numToString(t, 1);
+        }
+
         default:
             return codeGenOP(node, fp);
     }
