@@ -85,7 +85,10 @@ extern int yydebug;
     COMMA = 286,                   /* COMMA  */
     INT = 287,                     /* INT  */
     NUM = 288,                     /* NUM  */
-    ID = 289                       /* ID  */
+    ID = 289,                      /* ID  */
+    OR = 290,                      /* OR  */
+    AND = 291,                     /* AND  */
+    NOT = 292                      /* NOT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -126,6 +129,9 @@ extern int yydebug;
 #define INT 287
 #define NUM 288
 #define ID 289
+#define OR 290
+#define AND 291
+#define NOT 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -137,7 +143,7 @@ union YYSTYPE
     char* idName;
     int intVal;
 
-#line 141 "y.tab.h"
+#line 147 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

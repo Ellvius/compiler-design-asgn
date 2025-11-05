@@ -125,3 +125,14 @@ ASTNode* makeArrayNode(char* arrName, VarType type, ASTNode* l){
     ASTNode* temp = TreeCreate(0, TYPE_ID, arrName, NODE_ARRAY, l, NULL, NULL);
     return temp;
 }
+
+ASTNode *makeLogicOPNode(NodeType ntype, ASTNode *l, ASTNode *r){
+    if (l->type != TYPE_BOOL || r->type != TYPE_BOOL)
+    {
+        fprintf(stderr, "type mismatch: boolean operation\n");
+        exit(1);
+    }
+
+    ASTNode *temp = TreeCreate(0, TYPE_BOOL, NULL, ntype, l, NULL, r);
+    return temp;
+}

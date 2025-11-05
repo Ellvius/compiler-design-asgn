@@ -35,6 +35,14 @@ identifier      {letter}({letter}|{digit})*
 
 "int"       { return INT; }
 
+"OR"        { return OR; }
+"AND"       { return AND; }
+"NOT"       { return NOT; }
+
+"||"        { return OR; }
+"&&"        { return AND; }
+"!"         { return NOT; }
+
 "<="        { return LE; }
 ">="        { return GE; }
 "!="        { return NE; }
