@@ -1,53 +1,53 @@
 %{
-    
-    #include "./cse.h"
-
-    int yywrap();
-
-
-    struct CSENode* CSEList = NULL;
-    FILE* optimised = NULL;
+#include "y.tab.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 %}
 
-digit       [0-9]+
-letter      [a-zA-Z]
-identifier  {letter}({letter}|{digit}|_)*
-op          [+\-/\*%]
-
 %%
- 
-{identifier}" = "{identifier}([ ]{op}[ ]{identifier})?          {   findAndReplace(yytext); }
-\n                                                              {   fprintf(optimised, "\n");   }
-.                                                               {   fprintf(optimised, "%s", yytext);   }
+[ \t\r]+                    ;
+\n                          { return '\n'; }
 
+"read"                      { return READ; }
+"write"                     { return WRITE; }
+
+"t"[0-9]+                   {
+                                yylval.str = strdup(yytext);
+                                return TEMP;
+                            }
+
+[a-zA-Z_][a-zA-Z0-9_]*      {
+                                yylval.str = strdup(yytext);
+                                return ID;
+                            }
+
+[0-9]+                      {
+                                yylval.str = strdup(yytext);
+                                return NUM;
+                            }
+
+"=="                        { yylval.str = strdup("=="); return EQ; }
+"!="                        { yylval.str = strdup("!="); return NE; }
+"<="                        { yylval.str = strdup("<="); return LE; }
+">="                        { yylval.str = strdup(">="); return GE; }
+"<"                         { yylval.str = strdup("<");  return LT; }
+">"                         { yylval.str = strdup(">");  return GT; }
+
+"+"                         { yylval.str = strdup("+");  return PLUS; }
+"-"                         { yylval.str = strdup("-");  return MINUS; }
+"*"                         { yylval.str = strdup("*");  return MUL; }
+"/"                         { yylval.str = strdup("/");  return DIV; }
+"%"                         { yylval.str = strdup("%"); return MOD; }
+
+"="                         { return ASSIGN; }
+"("                         { return LPAREN; }
+")"                         { return RPAREN; }
+"["                         { return LBRACKET; }
+"]"                         { return RBRACKET; }
+
+.       
 %%
 
-int yywrap() { return 1; }
-
-int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <input_file>\n", argv[0]);
-        return 1;
-    }
-
-    yyin = fopen(argv[1], "r");
-    if (!yyin) {
-        perror("Error opening input file");
-        return 1;
-    }
-
-    optimised = fopen("optimised_output.txt", "w");
-    if (!optimised) {
-        perror("Error opening output file");
-        fclose(yyin);
-        return 1;
-    }
-
-    yylex();
-
-    fclose(yyin);
-    fclose(optimised);
-
-    return 0;
-}
+int yywrap(void){ return 1; }
