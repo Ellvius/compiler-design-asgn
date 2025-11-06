@@ -1,8 +1,9 @@
 decl
-    int a[10];
+    int a, b, c, d, i;
+    int arr[5];
 enddecl
 
 begin
-    a[1] = 6;
-    write(a[1]);
-end;
+    a = a + b;
+    b = b + a;
+end

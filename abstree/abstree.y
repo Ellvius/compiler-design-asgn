@@ -45,7 +45,6 @@
 
 Program     :   Declarations Code                   {
                                                         $$ = $2;
-                                                        printSymbolTable();
                                                         codeGen($2);
                                                         exit(0);
                                                     }

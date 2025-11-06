@@ -144,7 +144,6 @@ int main(int argc, char **argv) {
 
     fclose(yyin);
     fclose(output);
-    printExpressions(exprList);
     clearExpressions(&exprList);
     return 0;
 }
