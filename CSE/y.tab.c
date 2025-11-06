@@ -487,13 +487,12 @@ int main(int argc, char **argv) {
 
     fclose(yyin);
     fclose(output);
-    printExpressions(exprList);
     clearExpressions(&exprList);
     return 0;
 }
 
 
-#line 497 "y.tab.c"
+#line 496 "y.tab.c"
 
 /* For use in generated program */
 #define yydepth (int)(yystack.s_mark - yystack.s_base)
@@ -1170,7 +1169,7 @@ case 6:
                     fprintf(output, "%s = %s\n", yystack.l_mark[-2].str, yystack.l_mark[0].str);
                     free(yystack.l_mark[-2].str); free(yystack.l_mark[0].str);
                 }
-#line 1174 "y.tab.c"
+#line 1173 "y.tab.c"
 break;
 case 7:
 #line 48 "cse.y"
@@ -1185,7 +1184,7 @@ case 7:
                     removeExpressionsWithOperand(&exprList, yystack.l_mark[-4].str);
                     free(yystack.l_mark[-4].str); free(yystack.l_mark[-2].str); free(yystack.l_mark[-1].str); free(yystack.l_mark[0].str);
                 }
-#line 1189 "y.tab.c"
+#line 1188 "y.tab.c"
 break;
 case 8:
 #line 61 "cse.y"
@@ -1193,7 +1192,7 @@ case 8:
                     fprintf(output, "%s[%s] = %s\n", yystack.l_mark[-5].str, yystack.l_mark[-3].str, yystack.l_mark[0].str);
                     free(yystack.l_mark[-5].str); free(yystack.l_mark[-3].str); free(yystack.l_mark[0].str);
                 }
-#line 1197 "y.tab.c"
+#line 1196 "y.tab.c"
 break;
 case 9:
 #line 66 "cse.y"
@@ -1201,79 +1200,79 @@ case 9:
                     fprintf(output, "%s = %s[%s]\n", yystack.l_mark[-5].str, yystack.l_mark[-3].str, yystack.l_mark[-1].str);
                     removeExpressionsWithOperand(&exprList, yystack.l_mark[-5].str);
                 }
-#line 1205 "y.tab.c"
+#line 1204 "y.tab.c"
 break;
 case 13:
 #line 77 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1210 "y.tab.c"
+#line 1209 "y.tab.c"
 break;
 case 14:
 #line 78 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1215 "y.tab.c"
+#line 1214 "y.tab.c"
 break;
 case 15:
 #line 79 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1220 "y.tab.c"
+#line 1219 "y.tab.c"
 break;
 case 16:
 #line 80 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1225 "y.tab.c"
+#line 1224 "y.tab.c"
 break;
 case 17:
 #line 81 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1230 "y.tab.c"
+#line 1229 "y.tab.c"
 break;
 case 18:
 #line 82 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1235 "y.tab.c"
+#line 1234 "y.tab.c"
 break;
 case 19:
 #line 83 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1240 "y.tab.c"
+#line 1239 "y.tab.c"
 break;
 case 20:
 #line 84 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1245 "y.tab.c"
+#line 1244 "y.tab.c"
 break;
 case 21:
 #line 85 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1250 "y.tab.c"
+#line 1249 "y.tab.c"
 break;
 case 22:
 #line 86 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1255 "y.tab.c"
+#line 1254 "y.tab.c"
 break;
 case 23:
 #line 87 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1260 "y.tab.c"
+#line 1259 "y.tab.c"
 break;
 case 24:
 #line 90 "cse.y"
 	{ fprintf(output, "read(%s)\n", yystack.l_mark[-1].str);removeExpressionsWithOperand(&exprList, yystack.l_mark[-1].str); free(yystack.l_mark[-1].str); }
-#line 1265 "y.tab.c"
+#line 1264 "y.tab.c"
 break;
 case 25:
 #line 91 "cse.y"
 	{ fprintf(output, "read(%s[%s])\n", yystack.l_mark[-4].str, yystack.l_mark[-2].str); free(yystack.l_mark[-4].str); free(yystack.l_mark[-2].str); }
-#line 1270 "y.tab.c"
+#line 1269 "y.tab.c"
 break;
 case 26:
 #line 92 "cse.y"
 	{ fprintf(output, "write(%s)\n", yystack.l_mark[-1].str);free(yystack.l_mark[-1].str); }
-#line 1275 "y.tab.c"
+#line 1274 "y.tab.c"
 break;
-#line 1277 "y.tab.c"
+#line 1276 "y.tab.c"
     default:
         break;
     }

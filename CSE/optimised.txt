@@ -1,5 +1,22 @@
-t0 = 1 * 4
-c[t0] = 6
-t1 = 889600240 * 4
-t1 = c[1]
-write(t1)
+a = 0
+b = 100
+
+L0:
+t0 = a < 10
+if (t0) goto L1
+goto L2
+L1:
+
+t1 = a < 5
+if (t1) goto L3
+goto L4
+L3:
+write(b)
+L4:
+
+write(a)
+t2 = a + 1
+a = t2
+goto L0
+L2:
+

@@ -19,3 +19,6 @@ gcc -g abstree/lex.yy.c \
     -o "$PROJECT_ROOT/expl"
 
 "$PROJECT_ROOT/expl" "${1:-}"
+
+cd ./CSE
+./optimise.sh ../output.txt
