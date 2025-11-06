@@ -1,7 +1,6 @@
 #include "cse.h"
 
-static ExprNode *createNode(const char *result, const char *left,
-                            const char *op, const char *right) {
+static ExprNode *createNode(char *result, char *left, char *op, char *right) {
     ExprNode *node = (ExprNode *)malloc(sizeof(ExprNode));
     node->result = strdup(result);
     node->left = strdup(left);
@@ -11,15 +10,20 @@ static ExprNode *createNode(const char *result, const char *left,
     return node;
 }
 
-static int isSameExpression(const ExprNode *node, const char *left,
-                            const char *op, const char *right) {
+static int isSameExpression(ExprNode *node, char *left, char *op, char *right) {
+    
+    if(strcmp(left, right) > 0){
+        char* temp  = left;
+        left = right;
+        right = temp;
+    }
+
     return (strcmp(node->op, op) == 0 &&
             strcmp(node->left, left) == 0 &&
             strcmp(node->right, right) == 0);
 }
 
-void insertExpression(ExprNode **head, const char *result,
-                      const char *left, const char *op, const char *right) {
+void insertExpression(ExprNode **head, char *result, char *left, char *op, char *right) {
     if (!head) return;
 
     if (searchExpression(*head, left, op, right) != NULL)
@@ -30,8 +34,7 @@ void insertExpression(ExprNode **head, const char *result,
     *head = newNode;
 }
 
-ExprNode *searchExpression(ExprNode *head, const char *left,
-                           const char *op, const char *right) {
+ExprNode *searchExpression(ExprNode *head, char *left, char *op, char *right) {
     for (ExprNode *cur = head; cur != NULL; cur = cur->next) {
         if (isSameExpression(cur, left, op, right))
             return cur;
@@ -39,7 +42,7 @@ ExprNode *searchExpression(ExprNode *head, const char *left,
     return NULL;
 }
 
-void removeExpressionsWithOperand(ExprNode **head, const char *var) {
+void removeExpressionsWithOperand(ExprNode **head, char *var) {
     if (!head || !*head) return;
 
     ExprNode *cur = *head;
@@ -82,8 +85,8 @@ void clearExpressions(ExprNode **head) {
     *head = NULL;
 }
 
-void printExpressions(const ExprNode *head) {
-    for (const ExprNode *cur = head; cur; cur = cur->next) {
+void printExpressions(ExprNode *head) {
+    for (ExprNode *cur = head; cur; cur = cur->next) {
         printf("%s = %s %s %s\n", cur->result, cur->left, cur->op, cur->right);
     }
 }

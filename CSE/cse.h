@@ -5,33 +5,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* 
-   Structure to represent a single expression:
-   e.g. t1 = a + b  →  op = "+", left = "a", right = "b", result = "t1"
-*/
 typedef struct ExprNode {
-    char *result;       // result variable (e.g. t1)
-    char *left;         // left operand (e.g. a)
-    char *op;           // operator (e.g. +)
-    char *right;        // right operand (e.g. b)
+    char *result;       
+    char *left;         
+    char *op;           
+    char *right;        
     struct ExprNode *next;
 } ExprNode;
 
-/* Insert a new expression if not already present */
-void insertExpression(ExprNode **head, const char *result,
-                      const char *left, const char *op, const char *right);
+void insertExpression(ExprNode **head, char *result, char *left, char *op, char *right);
 
-/* Search for an existing expression by operator and operands */
-ExprNode *searchExpression(ExprNode *head, const char *left,
-                           const char *op, const char *right);
+ExprNode *searchExpression(ExprNode *head, char *left, char *op, char *right);
 
-/* Remove all expressions where given variable appears as operand */
-void removeExpressionsWithOperand(ExprNode **head, const char *var);
+void removeExpressionsWithOperand(ExprNode **head, char *var);
 
-/* Delete the entire expression list */
 void clearExpressions(ExprNode **head);
 
-/* Debug helper to print all expressions */
-void printExpressions(const ExprNode *head);
+void printExpressions(ExprNode *head);
 
 #endif
