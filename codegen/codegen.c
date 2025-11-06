@@ -183,11 +183,12 @@ char* codeGenNODE(ASTNode* node, FILE* fp){
 
         case NODE_ARRAY: {
             char* index = codeGenNODE(node->left, fp);
-            int temp = getTemp();
+            int temp1 = getTemp();
+            int temp2 = getTemp();
 
-            fprintf(fp, "t%d = %d * 4\n", temp, index);
-            fprintf(fp, "t%d = %s[%s]\n", temp, node->GEntry->name, index); // free offsetRow
-            return numToString(temp, 1);
+            fprintf(fp, "t%d = %s * 4\n", temp1, index);
+            fprintf(fp, "t%d = %s[t%d]\n", temp2, node->GEntry->name, temp1); // free offsetRow
+            return numToString(temp2, 1);
         }
 
         case NODE_CONN: {
@@ -203,14 +204,14 @@ char* codeGenNODE(ASTNode* node, FILE* fp){
             int L3 = getLabel();
 
             char *left = codeGenNODE(node->left, fp);
-            fprintf(fp, "\tifFalse (%s) goto L%d\n", left, L1);
+            fprintf(fp, "ifFalse (%s) goto L%d\n", left, L1);
             
             char *right = codeGenNODE(node->right, fp);
-            fprintf(fp, "\tifFalse (%s) goto L%d\n", right, L1);
-            fprintf(fp, "\tt%d = 1\n", t);
-            fprintf(fp, "\tgoto L%d\n", L2);
+            fprintf(fp, "ifFalse (%s) goto L%d\n", right, L1);
+            fprintf(fp, "t%d = 1\n", t);
+            fprintf(fp, "goto L%d\n", L2);
             fprintf(fp, "L%d:\n", L1);
-            fprintf(fp, "\tt%d = 0\n", t);
+            fprintf(fp, "t%d = 0\n", t);
             fprintf(fp, "L%d:\n", L2);
 
             fprintf(fp, "\n");
@@ -224,14 +225,14 @@ char* codeGenNODE(ASTNode* node, FILE* fp){
             int L3 = getLabel();
 
             char *left = codeGenNODE(node->left, fp);
-            fprintf(fp, "\tif (%s) goto L%d\n", left, L1);
+            fprintf(fp, "if (%s) goto L%d\n", left, L1);
             
             char *right = codeGenNODE(node->right, fp);
-            fprintf(fp, "\tif (%s) goto L%d\n", right, L1);
-            fprintf(fp, "\tt%d = 0\n", t);
-            fprintf(fp, "\tgoto L%d\n", L2);
+            fprintf(fp, "if (%s) goto L%d\n", right, L1);
+            fprintf(fp, "t%d = 0\n", t);
+            fprintf(fp, "goto L%d\n", L2);
             fprintf(fp, "L%d:\n", L1);
-            fprintf(fp, "\tt%d = 1\n", t);
+            fprintf(fp, "t%d = 1\n", t);
             fprintf(fp, "L%d:\n", L2);
 
             fprintf(fp, "\n");
@@ -245,11 +246,11 @@ char* codeGenNODE(ASTNode* node, FILE* fp){
 
             char *operand = codeGenNODE(node->left, fp);
 
-            fprintf(fp, "\tif (%s) goto L%d\n", operand, L1);
-            fprintf(fp, "\tt%d = 1\n", t); // true if operand is false
-            fprintf(fp, "\tgoto L%d\n", L2);
+            fprintf(fp, "if (%s) goto L%d\n", operand, L1);
+            fprintf(fp, "t%d = 1\n", t); // true if operand is false
+            fprintf(fp, "goto L%d\n", L2);
             fprintf(fp, "L%d:\n", L1);
-            fprintf(fp, "\tt%d = 0\n", t); // false if operand is true
+            fprintf(fp, "t%d = 0\n", t); // false if operand is true
             fprintf(fp, "L%d:\n", L2);
 
             fprintf(fp, "\n");

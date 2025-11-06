@@ -1,23 +1,8 @@
 decl
-    int a, b, c[10];int hello[100];
+    int a[10];
 enddecl
 
 begin
-    read(a);
-    read(b);
-    write(a+b);
-    if(a == b AND a < 10) then
-    write(b);
-    endif;
-
-    if(a < 0) then
-        write(4);
-    else
-        write(5);
-    endif;
-
-    while(a > 10) do
-        write(b);
-        a = a - 1;
-    endwhile;
+    a[1] = 6;
+    write(a[1]);
 end;
