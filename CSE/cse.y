@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
     }
 
     yyin = fopen(argv[1], "r");
-    output = fopen("optimised.txt", "w");
+    output = fopen("../optimised.txt", "w");
 
     if (hasLabel(argv[1])) {
         char buffer[1024];
