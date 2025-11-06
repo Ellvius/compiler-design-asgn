@@ -31,8 +31,7 @@
 
     int yylex(void);
     void yyerror(const char *s);
-    extern FILE *yyin;
-    extern int hasCondition;     
+    extern FILE *yyin;   
     ExprNode *exprList = NULL;    
     FILE* output = NULL;
 #ifdef YYSTYPE
@@ -41,12 +40,12 @@
 #endif
 #ifndef YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
-#line 18 "cse.y"
+#line 17 "cse.y"
 typedef union YYSTYPE {
     char *str;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 50 "y.tab.c"
+#line 49 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -107,50 +106,50 @@ extern int YYPARSE_DECL();
 #define YYERRCODE 256
 typedef int YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,    0,    3,    3,    3,    4,    4,    4,    4,    4,
-    4,    1,    1,    1,    2,    2,    2,    2,    2,    2,
-    2,    2,    2,    2,    2,    5,    5,    5,
+    0,    0,    3,    3,    3,    4,    4,    4,    4,    1,
+    1,    1,    2,    2,    2,    2,    2,    2,    2,    2,
+    2,    2,    2,    5,    5,    5,
 };
 static const YYINT yylen[] = {                            2,
-    2,    1,    2,    2,    1,    3,    3,    5,    5,    6,
-    8,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-    1,    1,    1,    1,    1,    4,    7,    4,
+    2,    1,    2,    2,    1,    3,    5,    6,    6,    1,
+    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+    1,    1,    1,    4,    7,    4,
 };
 static const YYINT yydefred[] = {                         0,
     0,    0,    0,    0,    5,    0,    2,    0,    0,    0,
-    0,    0,    0,    0,    1,    3,    4,   12,   13,   14,
-    0,    0,    0,    0,    0,   15,   16,   17,   18,   19,
-   20,   21,   22,   23,   24,   25,    0,    0,    0,   26,
-    0,   28,    8,    0,    9,    0,    0,    0,    0,   27,
-   11,
+    0,    0,    0,    0,    1,    3,    4,   10,   11,   12,
+    6,    0,    0,    0,    0,    0,    0,    0,   13,   14,
+   15,   16,   17,   18,   19,   20,   21,   22,   23,    0,
+   24,    0,   26,    0,    0,    7,    0,    8,    9,    0,
+   25,
 };
 #if defined(YYDESTRUCT_CALL) || defined(YYSTYPE_TOSTRING)
 static const YYINT yystos[] = {                           0,
   257,  258,  271,  272,   10,  279,  282,  283,  284,  273,
   276,  273,  274,  274,  282,   10,   10,  257,  258,  259,
-  280,  258,  280,  257,  280,  260,  261,  262,  263,  264,
-  265,  266,  267,  268,  269,  270,  281,  277,  281,  275,
-  276,  275,  280,  273,  280,  258,  280,  277,  281,  275,
-  280,
+  280,  258,  257,  280,  257,  280,  277,  276,  260,  261,
+  262,  263,  264,  265,  266,  267,  268,  269,  270,  281,
+  275,  276,  275,  273,  280,  280,  258,  280,  277,  277,
+  275,
 };
 #endif /* YYDESTRUCT_CALL || YYSTYPE_TOSTRING */
 static const YYINT yydgoto[] = {                          6,
-   21,   37,    7,    8,    9,
+   21,   40,    7,    8,    9,
 };
 static const YYINT yysindex[] = {                       -10,
- -256, -271, -270, -250,    0,  -10,    0,   15,   17, -236,
- -228, -236, -226, -236,    0,    0,    0,    0,    0,    0,
- -254, -245, -254, -257, -241,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0, -236, -238, -236,    0,
- -222,    0,    0, -236,    0, -240, -254, -235, -236,    0,
+ -241, -271, -244, -243,    0,  -10,    0,   24,   32, -221,
+ -215, -218, -213, -221,    0,    0,    0,    0,    0,    0,
+    0, -232, -230, -256, -260, -228, -225, -221,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0, -221,
+    0, -209,    0, -221, -227,    0, -226,    0,    0, -223,
     0,
 };
 static const YYINT yyrindex[] = {                         0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-   29,    0,   31,    0,    0,    0,    0,    0,    0,    0,
+    0,    0, -242,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,   32,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,
 };
 #if YYBTYACC
@@ -164,16 +163,16 @@ static const YYINT yycindex[] = {                         0,
 };
 #endif
 static const YYINT yygindex[] = {                         0,
-  -11,  -18,   37,    0,    0,
+  -11,    0,   47,    0,    0,
 };
 #define YYTABLESIZE 262
 static const YYINT yytable[] = {                          5,
-   23,   12,   25,   13,   39,   26,   27,   28,   29,   30,
-   31,   32,   33,   34,   35,   36,   10,   40,   41,   11,
-   18,   19,   20,   14,   16,   43,   17,   45,   49,   22,
-   24,   38,   47,   42,   44,   46,   48,   51,    6,   50,
-    7,   10,   15,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   24,   12,   26,   29,   30,   31,   32,   33,   34,   35,
+   36,   37,   38,   39,   41,   42,   45,   10,   10,   10,
+   10,   10,   10,   10,   10,   10,   10,   10,   46,   13,
+   14,   10,   48,   16,   11,   18,   19,   20,   23,   19,
+   20,   17,   22,   25,   27,   28,   43,   44,   47,   49,
+   50,   51,   15,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
@@ -197,12 +196,12 @@ static const YYINT yytable[] = {                          5,
     3,    4,
 };
 static const YYINT yycheck[] = {                         10,
-   12,  273,   14,  274,   23,  260,  261,  262,  263,  264,
-  265,  266,  267,  268,  269,  270,  273,  275,  276,  276,
-  257,  258,  259,  274,   10,   37,   10,   39,   47,  258,
-  257,  277,   44,  275,  273,  258,  277,   49,   10,  275,
-   10,   10,    6,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   12,  273,   14,  260,  261,  262,  263,  264,  265,  266,
+  267,  268,  269,  270,  275,  276,   28,  260,  261,  262,
+  263,  264,  265,  266,  267,  268,  269,  270,   40,  274,
+  274,  273,   44,   10,  276,  257,  258,  259,  257,  258,
+  259,   10,  258,  257,  277,  276,  275,  273,  258,  277,
+  277,  275,    6,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
@@ -285,11 +284,9 @@ static const char *const yyrule[] = {
 "Line : IOStmt '\\n'",
 "Line : '\\n'",
 "Assignment : ID ASSIGN Operand",
-"Assignment : TEMP ASSIGN Operand",
-"Assignment : ID ASSIGN Operand Operator Operand",
 "Assignment : TEMP ASSIGN Operand Operator Operand",
 "Assignment : ID LBRACKET TEMP RBRACKET ASSIGN Operand",
-"Assignment : ID LBRACKET TEMP RBRACKET ASSIGN Operand Operator Operand",
+"Assignment : TEMP ASSIGN ID LBRACKET Operand RBRACKET",
 "Operand : ID",
 "Operand : TEMP",
 "Operand : NUM",
@@ -438,7 +435,7 @@ static YYINT  *yylexp = 0;
 
 static YYINT  *yylexemes = 0;
 #endif /* YYBTYACC */
-#line 131 "cse.y"
+#line 96 "cse.y"
 
 void yyerror(const char *s){
     fprintf(stderr, "Error: %s\n", s);
@@ -482,20 +479,21 @@ int main(int argc, char **argv) {
         rewind(yyin);
         while (fgets(buffer, sizeof(buffer), yyin))
             fputs(buffer, output);
-        printf("[INFO] Found label line — skipping optimization.\n");
+        printf("Found label line — skipping optimization.\n");
     } else {
-        printf("[INFO] No label line found — running optimizer.\n");
+        printf("No label line found — running optimizer.\n");
         yyparse();
     }
 
     fclose(yyin);
     fclose(output);
+    printExpressions(exprList);
     clearExpressions(&exprList);
     return 0;
 }
 
 
-#line 499 "y.tab.c"
+#line 497 "y.tab.c"
 
 /* For use in generated program */
 #define yydepth (int)(yystack.s_mark - yystack.s_base)
@@ -1166,151 +1164,116 @@ yyreduce:
     switch (yyn)
     {
 case 6:
-#line 43 "cse.y"
+#line 41 "cse.y"
 	{
-            removeExpressionsWithOperand(&exprList, yystack.l_mark[-2].str);
-            fprintf(output, "%s = %s\n", yystack.l_mark[-2].str, yystack.l_mark[0].str);
-            free(yystack.l_mark[-2].str); free(yystack.l_mark[0].str);
-        }
-#line 1176 "y.tab.c"
+                    removeExpressionsWithOperand(&exprList, yystack.l_mark[-2].str);
+                    fprintf(output, "%s = %s\n", yystack.l_mark[-2].str, yystack.l_mark[0].str);
+                    free(yystack.l_mark[-2].str); free(yystack.l_mark[0].str);
+                }
+#line 1174 "y.tab.c"
 break;
 case 7:
-#line 50 "cse.y"
-	{   fprintf(output, "%s = %s\n", yystack.l_mark[-2].str, yystack.l_mark[0].str);   }
-#line 1181 "y.tab.c"
+#line 48 "cse.y"
+	{
+                    ExprNode *found = searchExpression(exprList, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
+                    if (found) {
+                        fprintf(output, "%s = %s\n", yystack.l_mark[-4].str, found->result);
+                    } else {
+                        insertExpression(&exprList, yystack.l_mark[-4].str, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
+                        fprintf(output, "%s = %s %s %s\n", yystack.l_mark[-4].str, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
+                    }
+                    removeExpressionsWithOperand(&exprList, yystack.l_mark[-4].str);
+                    free(yystack.l_mark[-4].str); free(yystack.l_mark[-2].str); free(yystack.l_mark[-1].str); free(yystack.l_mark[0].str);
+                }
+#line 1189 "y.tab.c"
 break;
 case 8:
-#line 53 "cse.y"
+#line 61 "cse.y"
 	{
-            ExprNode *found = searchExpression(exprList, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-            if (found) {
-                fprintf(output, "%s = %s\n", yystack.l_mark[-4].str, found->result);
-            } else {
-                insertExpression(&exprList, yystack.l_mark[-4].str, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-                fprintf(output, "%s = %s %s %s\n", yystack.l_mark[-4].str, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-            }
-            removeExpressionsWithOperand(&exprList, yystack.l_mark[-4].str);
-            free(yystack.l_mark[-4].str); free(yystack.l_mark[-2].str); free(yystack.l_mark[-1].str); free(yystack.l_mark[0].str);
-        }
-#line 1196 "y.tab.c"
+                    fprintf(output, "%s[%s] = %s\n", yystack.l_mark[-5].str, yystack.l_mark[-3].str, yystack.l_mark[0].str);
+                    free(yystack.l_mark[-5].str); free(yystack.l_mark[-3].str); free(yystack.l_mark[0].str);
+                }
+#line 1197 "y.tab.c"
 break;
 case 9:
 #line 66 "cse.y"
 	{
-            ExprNode *found = searchExpression(exprList, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-            if (found) {
-                fprintf(output, "%s = %s\n", yystack.l_mark[-4].str, found->result);
-            } else {
-                insertExpression(&exprList, yystack.l_mark[-4].str, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-                fprintf(output, "%s = %s %s %s\n", yystack.l_mark[-4].str, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-            }
-            free(yystack.l_mark[-4].str); free(yystack.l_mark[-2].str); free(yystack.l_mark[-1].str); free(yystack.l_mark[0].str);
-        }
+                    fprintf(output, "%s = %s[%s]\n", yystack.l_mark[-5].str, yystack.l_mark[-3].str, yystack.l_mark[-1].str);
+                    removeExpressionsWithOperand(&exprList, yystack.l_mark[-5].str);
+                }
+#line 1205 "y.tab.c"
+break;
+case 13:
+#line 77 "cse.y"
+	{   yyval.str = yystack.l_mark[0].str;    }
 #line 1210 "y.tab.c"
 break;
-case 10:
+case 14:
 #line 78 "cse.y"
-	{
-            char buffer[128];
-            snprintf(buffer, sizeof(buffer), "%s[%s]", yystack.l_mark[-5].str, yystack.l_mark[-3].str);
-            removeExpressionsWithOperand(&exprList, buffer);
-            removeExpressionsWithOperand(&exprList, yystack.l_mark[-5].str);
-            fprintf(output, "%s[%s] = %s\n", yystack.l_mark[-5].str, yystack.l_mark[-3].str, yystack.l_mark[0].str);
-            free(yystack.l_mark[-5].str); free(yystack.l_mark[-3].str); free(yystack.l_mark[0].str);
-        }
-#line 1222 "y.tab.c"
-break;
-case 11:
-#line 88 "cse.y"
-	{
-            char buffer[128];
-            snprintf(buffer, sizeof(buffer), "%s[%s]", yystack.l_mark[-7].str, yystack.l_mark[-5].str);
-
-            ExprNode *found = searchExpression(exprList, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-            if (found) {
-                fprintf(output, "%s[%s] = %s\n", yystack.l_mark[-7].str, yystack.l_mark[-5].str, found->result);
-            } else {
-                insertExpression(&exprList, buffer, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-                fprintf(output, "%s[%s] = %s %s %s\n", yystack.l_mark[-7].str, yystack.l_mark[-5].str, yystack.l_mark[-2].str, yystack.l_mark[-1].str, yystack.l_mark[0].str);
-            }
-
-            removeExpressionsWithOperand(&exprList, buffer);
-            removeExpressionsWithOperand(&exprList, yystack.l_mark[-7].str);
-            free(yystack.l_mark[-7].str); free(yystack.l_mark[-5].str); free(yystack.l_mark[-2].str); free(yystack.l_mark[-1].str); free(yystack.l_mark[0].str);
-        }
-#line 1242 "y.tab.c"
+	{   yyval.str = yystack.l_mark[0].str;    }
+#line 1215 "y.tab.c"
 break;
 case 15:
-#line 111 "cse.y"
+#line 79 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1247 "y.tab.c"
+#line 1220 "y.tab.c"
 break;
 case 16:
-#line 112 "cse.y"
+#line 80 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1252 "y.tab.c"
+#line 1225 "y.tab.c"
 break;
 case 17:
-#line 113 "cse.y"
+#line 81 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1257 "y.tab.c"
+#line 1230 "y.tab.c"
 break;
 case 18:
-#line 114 "cse.y"
+#line 82 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1262 "y.tab.c"
+#line 1235 "y.tab.c"
 break;
 case 19:
-#line 115 "cse.y"
+#line 83 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1267 "y.tab.c"
+#line 1240 "y.tab.c"
 break;
 case 20:
-#line 116 "cse.y"
+#line 84 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1272 "y.tab.c"
+#line 1245 "y.tab.c"
 break;
 case 21:
-#line 117 "cse.y"
+#line 85 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1277 "y.tab.c"
+#line 1250 "y.tab.c"
 break;
 case 22:
-#line 118 "cse.y"
+#line 86 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1282 "y.tab.c"
+#line 1255 "y.tab.c"
 break;
 case 23:
-#line 119 "cse.y"
+#line 87 "cse.y"
 	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1287 "y.tab.c"
+#line 1260 "y.tab.c"
 break;
 case 24:
-#line 120 "cse.y"
-	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1292 "y.tab.c"
+#line 90 "cse.y"
+	{ fprintf(output, "read(%s)\n", yystack.l_mark[-1].str);removeExpressionsWithOperand(&exprList, yystack.l_mark[-1].str); free(yystack.l_mark[-1].str); }
+#line 1265 "y.tab.c"
 break;
 case 25:
-#line 121 "cse.y"
-	{   yyval.str = yystack.l_mark[0].str;    }
-#line 1297 "y.tab.c"
+#line 91 "cse.y"
+	{ fprintf(output, "read(%s[%s])\n", yystack.l_mark[-4].str, yystack.l_mark[-2].str); free(yystack.l_mark[-4].str); free(yystack.l_mark[-2].str); }
+#line 1270 "y.tab.c"
 break;
 case 26:
-#line 125 "cse.y"
-	{ fprintf(output, "read(%s)\n", yystack.l_mark[-1].str);removeExpressionsWithOperand(&exprList, yystack.l_mark[-1].str); free(yystack.l_mark[-1].str); }
-#line 1302 "y.tab.c"
-break;
-case 27:
-#line 126 "cse.y"
-	{ fprintf(output, "read(%s[%s])\n", yystack.l_mark[-4].str, yystack.l_mark[-2].str);removeExpressionsWithOperand(&exprList, yystack.l_mark[-4].str); free(yystack.l_mark[-4].str); free(yystack.l_mark[-2].str); }
-#line 1307 "y.tab.c"
-break;
-case 28:
-#line 127 "cse.y"
+#line 92 "cse.y"
 	{ fprintf(output, "write(%s)\n", yystack.l_mark[-1].str);free(yystack.l_mark[-1].str); }
-#line 1312 "y.tab.c"
+#line 1275 "y.tab.c"
 break;
-#line 1314 "y.tab.c"
+#line 1277 "y.tab.c"
     default:
         break;
     }

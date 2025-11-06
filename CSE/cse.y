@@ -9,8 +9,7 @@
 
     int yylex(void);
     void yyerror(const char *s);
-    extern FILE *yyin;
-    extern int hasCondition;     
+    extern FILE *yyin;   
     ExprNode *exprList = NULL;    
     FILE* output = NULL;
 %}
@@ -38,70 +37,37 @@ Line        : Assignment '\n'
             | '\n'
             ;
 
-Assignment
-    : ID ASSIGN Operand
-        {
-            removeExpressionsWithOperand(&exprList, $1);
-            fprintf(output, "%s = %s\n", $1, $3);
-            free($1); free($3);
-        }
+Assignment  :   ID ASSIGN Operand
+                {
+                    removeExpressionsWithOperand(&exprList, $1);
+                    fprintf(output, "%s = %s\n", $1, $3);
+                    free($1); free($3);
+                }
 
-    | TEMP ASSIGN Operand
-        {   fprintf(output, "%s = %s\n", $1, $3);   }
+            |   TEMP ASSIGN Operand Operator Operand
+                {
+                    ExprNode *found = searchExpression(exprList, $3, $4, $5);
+                    if (found) {
+                        fprintf(output, "%s = %s\n", $1, found->result);
+                    } else {
+                        insertExpression(&exprList, $1, $3, $4, $5);
+                        fprintf(output, "%s = %s %s %s\n", $1, $3, $4, $5);
+                    }
+                    removeExpressionsWithOperand(&exprList, $1);
+                    free($1); free($3); free($4); free($5);
+                }
 
-    | ID ASSIGN Operand Operator Operand
-        {
-            ExprNode *found = searchExpression(exprList, $3, $4, $5);
-            if (found) {
-                fprintf(output, "%s = %s\n", $1, found->result);
-            } else {
-                insertExpression(&exprList, $1, $3, $4, $5);
-                fprintf(output, "%s = %s %s %s\n", $1, $3, $4, $5);
-            }
-            removeExpressionsWithOperand(&exprList, $1);
-            free($1); free($3); free($4); free($5);
-        }
-
-    | TEMP ASSIGN Operand Operator Operand
-        {
-            ExprNode *found = searchExpression(exprList, $3, $4, $5);
-            if (found) {
-                fprintf(output, "%s = %s\n", $1, found->result);
-            } else {
-                insertExpression(&exprList, $1, $3, $4, $5);
-                fprintf(output, "%s = %s %s %s\n", $1, $3, $4, $5);
-            }
-            free($1); free($3); free($4); free($5);
-        }
-
-    | ID LBRACKET TEMP RBRACKET ASSIGN Operand
-        {
-            char buffer[128];
-            snprintf(buffer, sizeof(buffer), "%s[%s]", $1, $3);
-            removeExpressionsWithOperand(&exprList, buffer);
-            removeExpressionsWithOperand(&exprList, $1);
-            fprintf(output, "%s[%s] = %s\n", $1, $3, $6);
-            free($1); free($3); free($6);
-        }
-
-    | ID LBRACKET TEMP RBRACKET ASSIGN Operand Operator Operand
-        {
-            char buffer[128];
-            snprintf(buffer, sizeof(buffer), "%s[%s]", $1, $3);
-
-            ExprNode *found = searchExpression(exprList, $6, $7, $8);
-            if (found) {
-                fprintf(output, "%s[%s] = %s\n", $1, $3, found->result);
-            } else {
-                insertExpression(&exprList, buffer, $6, $7, $8);
-                fprintf(output, "%s[%s] = %s %s %s\n", $1, $3, $6, $7, $8);
-            }
-
-            removeExpressionsWithOperand(&exprList, buffer);
-            removeExpressionsWithOperand(&exprList, $1);
-            free($1); free($3); free($6); free($7); free($8);
-        }
-    ;
+            |   ID LBRACKET TEMP RBRACKET ASSIGN Operand
+                {
+                    fprintf(output, "%s[%s] = %s\n", $1, $3, $6);
+                    free($1); free($3); free($6);
+                }
+            |   TEMP ASSIGN ID LBRACKET Operand RBRACKET
+                {
+                    fprintf(output, "%s = %s[%s]\n", $1, $3, $5);
+                    removeExpressionsWithOperand(&exprList, $1);
+                }
+            ;
 
 Operand     : ID
             | TEMP
@@ -121,9 +87,8 @@ Operator    : PLUS      {   $$ = $1;    }
             | NE        {   $$ = $1;    }
             ;
 
-IOStmt
-            : READ LPAREN ID RPAREN                         { fprintf(output, "read(%s)\n", $3);removeExpressionsWithOperand(&exprList, $3); free($3); }
-            | READ LPAREN ID LBRACKET TEMP RBRACKET RPAREN  { fprintf(output, "read(%s[%s])\n", $3, $5);removeExpressionsWithOperand(&exprList, $3); free($3); free($5); }
+IOStmt      : READ LPAREN ID RPAREN                         { fprintf(output, "read(%s)\n", $3);removeExpressionsWithOperand(&exprList, $3); free($3); }
+            | READ LPAREN ID LBRACKET TEMP RBRACKET RPAREN  { fprintf(output, "read(%s[%s])\n", $3, $5); free($3); free($5); }
             | WRITE LPAREN Operand RPAREN                   { fprintf(output, "write(%s)\n", $3);free($3); }
             ;
 
@@ -171,14 +136,15 @@ int main(int argc, char **argv) {
         rewind(yyin);
         while (fgets(buffer, sizeof(buffer), yyin))
             fputs(buffer, output);
-        printf("[INFO] Found label line — skipping optimization.\n");
+        printf("Found label line — skipping optimization.\n");
     } else {
-        printf("[INFO] No label line found — running optimizer.\n");
+        printf("No label line found — running optimizer.\n");
         yyparse();
     }
 
     fclose(yyin);
     fclose(output);
+    printExpressions(exprList);
     clearExpressions(&exprList);
     return 0;
 }
